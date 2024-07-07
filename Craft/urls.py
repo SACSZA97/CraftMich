@@ -15,15 +15,28 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from michoacan import views
 from django.conf import settings
 from base import views as views_base
+from django.conf.urls.static import static
+from michoacan import views as views_mich
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ca/', views.ca, name="ca"),
-    path('', views_base.Carrusel, name="Carrusel")
+    path('ForCarrusel/',views_base.contacto,name="Contacto"),
+    path('registrar/',views_base.registrar,name="Registrar"),
+    path('bienvenida/', views.bienvenida, name="bienvenida"),
+    path('registro/', views_base.registro, name="Registro"),
+    path('login/', views_base.login, name="Login"),
+    path('', views_base.Carrusel, name="Carrusel"),
+    path('accounts', include('django.contrib.auth.urls')),
+    path('CrearEvento/', views_mich.CrearEventos, name="CrearEvento"),
+    path('ConsultarEvento/', views_mich.ConsultarEvento, name="ConsultarEvento"),
+    path('eliminarEvento/<int:id>/',views_mich.eliminarEvento,name='Eliminar'),
+    path('formEditarEvento/<int:id>/',views_mich.ConsultarEventoIndividual, name='ConsultaIndividual'),
+    path('editarEvento/<int:id>/',views_mich.editarEvento,name='Editar'),
 ]
 
 if settings.DEBUG:
